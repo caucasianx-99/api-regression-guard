@@ -1,0 +1,33 @@
+openapi: 3.0.3
+
+info:
+  title: JSONPlaceholder demo
+  version: "1.0.0"
+
+paths:
+  /posts:
+    get:
+      summary: List posts
+      responses:
+        "200":
+          description: Posts returned
+
+    post:
+      summary: Create post
+      responses:
+        "201":
+          description: Post created
+
+  /users:
+    get:
+      summary: List users
+      responses:
+        "200":
+          description: Users returned
+
+  /posts/{id}:
+    get:
+      summary: Get one post
+      responses:
+        "200":
+          description: Post returned
