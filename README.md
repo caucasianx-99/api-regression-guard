@@ -90,7 +90,7 @@ Windows:
 Install the project:
 
 ```bash
-python -m pip install -e .
+python -m pip install git+https://github.com/caucasianx-99/api-regression-guard.git
 ```
 
 For development and tests:
@@ -129,8 +129,8 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install project
-        run: python -m pip install -e .
+        - name: Install API Regression Guard
+          run: python -m pip install git+https://github.com/caucasianx-99/api-regression-guard.git
 
       - name: Test API
         run: |
