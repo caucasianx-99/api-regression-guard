@@ -1,44 +1,25 @@
 # API Regression Guard
 
-OpenAPI-driven API regression checks for local development and CI.
+Catch API regressions from your OpenAPI specification before they reach production.
 
-## v0.2 capability
+API Regression Guard is a lightweight Python CLI that checks a live API against the response status codes defined in an OpenAPI specification.
 
-- Load OpenAPI 3.x YAML/JSON
-- Extract endpoints and expected response codes
-- Safely call GET/HEAD endpoints that do not need path parameters
-- Skip POST/PUT/PATCH/DELETE by default
-- Skip templated paths like `/users/{id}`
-- Return exit code `1` when a checked endpoint fails
-- Include pytest coverage
+It is designed for local development and CI/CD workflows.
 
-## Install
+## Why?
 
-```bash
-python -m pip install -e ".[dev]"
-```
+An API can change unexpectedly after a deployment:
 
-## Inspect a spec
+- an endpoint that returned `200` starts returning `500`
+- a route disappears
+- a documented response no longer matches the running service
+- a deployment introduces a regression that manual testing misses
 
-```bash
-arguard inspect --spec examples/openapi.yaml
-```
+API Regression Guard turns these checks into a simple command that can also fail your CI pipeline automatically.
 
-## Run safe checks against a real public demo API
+## Quick example
 
 ```bash
-arguard test --spec examples/openapi.yaml --base-url https://jsonplaceholder.typicode.com
-```
-
-Expected shape:
-
-```text
-PASS GET     /posts status=200
-SKIP POST    /posts (unsafe or requires path parameters)
-SKIP GET     /posts/{id} (unsafe or requires path parameters)
-PASS GET     /users status=200
-
-passed=2 failed=0 skipped=2
-```
-
-The tool deliberately avoids state-changing methods at this stage.
+arguard test \
+  --spec examples/openapi.yaml \
+  --base-url https://your-api.example.com
